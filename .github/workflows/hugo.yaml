@@ -34,7 +34,7 @@ jobs:
     env:
       HUGO_VERSION: 0.128.0
     steps:
-      - name: download theme
+      - name: Download theme
       - run: git submodule update --init --recursive
       - name: Install Hugo CLI
         run: |
