@@ -68,8 +68,6 @@ jobs:
           path: ./public
       - name: ECHO
         run: echo "baseURL:" ${{ steps.pages.outputs.base_url }}
-      - name: ECHO2
-        run: echo "baseURL:" ${{ steps.deployment.outputs.page_url }}
 
   # Deployment job
   deploy:
