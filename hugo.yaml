@@ -1,5 +1,5 @@
-baseURL: https://Dashvvood.github.io/
-# baseURL: http://localhost:1313/
+# baseURL: https://Dashvvood.github.io/
+baseURL: http://localhost:1313/
 languageCode: en-us
 title: Empty Attic
 paginate: 5

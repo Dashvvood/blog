@@ -57,10 +57,10 @@ jobs:
           TZ: Europe/Paris
         run: |
           hugo \
-            --config "./hugo.yaml" \
+            --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"       
       - name: Build pagefind
-        run:  npx -y pagefind --site public
+        run:  npx pagefind --site "public"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
