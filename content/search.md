@@ -2,7 +2,6 @@
 title: 'Search'
 date: 2024-06-29T22:56:59+02:00
 author: lup1n
-
 ---
 
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
