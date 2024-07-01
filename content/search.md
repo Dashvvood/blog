@@ -4,10 +4,8 @@ date: 2024-06-29T22:56:59+02:00
 author: lup1n
 ---
 
-{{ .Site.BaseURL }}
-
-<link href="pagefind/pagefind-ui.css" rel="stylesheet">
-<script src="pagefind/pagefind-ui.js"></script>
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
 <div id="search"></div>
 <script>
     window.addEventListener('DOMContentLoaded', (event) => {

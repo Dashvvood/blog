@@ -58,7 +58,7 @@ jobs:
         run: |
           hugo \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"       
+            --baseURL "${{ steps.pages.outputs.base_url }}/blog/"       
       - name: Build pagefind
         run:  npx pagefind --site "public"
       - name: Upload artifact
