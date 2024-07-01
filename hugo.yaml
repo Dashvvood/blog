@@ -1,0 +1,66 @@
+baseURL: https://Dashvvood.github.io/
+# baseURL: http://localhost:1313/
+languageCode: en-us
+title: Empty Attic
+paginate: 5
+theme: PaperMod
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+        enable: true
+  tableOfContents:
+    endLevel: 3
+    ordered: true
+    startLevel: 2
+
+taxonomies:
+  category: categories
+  series: series
+  tag: tags
+  
+params:
+  math: true
+  author: ["lup1n"]
+  ShowBreadCrumbs: true
+  ShowToc: true
+  TocOpen: false
+  ShowCodeCopyButtons: true
+  ShowShareButtons: true
+  ShowReadingTime: true
+  disableScrollToTop: false
+  disableSpecial1stPost: true
+
+enableEmoji: true
+
+
+
+menu:
+  main:
+    - name: Archive
+      url: archive/
+      weight: 10
+    - name: Search
+      url: search/
+      weight: 10
+    - name: Tags
+      url: tags/
+      weight: 10
+    - name: About
+      url: about/
+      weight: 10
+    - name: Todo
+      url: todo/
+      weight: 10
