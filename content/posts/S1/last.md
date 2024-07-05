@@ -1,1 +1,1 @@
-./OnlyOnce/index.md
+./AI_News/index.md
