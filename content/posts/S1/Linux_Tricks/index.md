@@ -22,10 +22,6 @@ alias lls='ls -lh --time-style="+%Y-%m-%d %H:%M:%S"'
 
 
 
----
-
-
-
 ## Tmux
 
 ### how to reuse
@@ -44,8 +40,8 @@ run-shell ~/clone/path/resurrect.tmux
 ```shell
 bind-key g setw synchronize-panes
 bind-key G setw synchronize-panes
-bind r source-file ~/.tmux.conf
 set -g mouse off # use mouse to operate (not recommended)
+run-shell ~/clone/path/resurrect.tmux # for tmux resurrect
 
 # chage prefix from 'Ctrl+b' to 'Alt+b'
 # unbind C-b
@@ -64,11 +60,7 @@ tmux source-file ~/.tmux.conf
 
 - `prefix` + <kbd>cltr-r</kbd> 
 
-
-
 ---
-
-To be continued, :smile_cat:
 
 
 
@@ -230,3 +222,174 @@ output.mp4
 ```shell
 ffmpeg -i $file -filter:v "crop=length:height:x:y" $output_file
 ```
+
+
+
+## ssh
+
+- [SSH服务原理和使用技巧](https://www.escapelife.site/posts/e2e78d82.html)
+- [史上最全 SSH 暗黑技巧详解](https://plantegg.github.io/2019/06/02/%E5%8F%B2%E4%B8%8A%E6%9C%80%E5%85%A8_SSH_%E6%9A%97%E9%BB%91%E6%8A%80%E5%B7%A7%E8%AF%A6%E8%A7%A3--%E6%94%B6%E8%97%8F%E4%BF%9D%E5%B9%B3%E5%AE%89/)
+
+**ssh config**
+
+```shell
+Host TARGET
+    HostName X.X.X.X
+    User YYY
+    Port ZZZ
+    ServerAliveInterval 59
+    # keep the password(precisely the connection) once connected
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h-%p  # save the cache
+    ControlPersist 30d  # for 30 days
+```
+
+**ssh -b**
+
+```shell
+A flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 137.194.218.145  netmask 255.255.248.0  broadcast 137.194.223.255
+
+B: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 137.194.250.227  netmask 255.255.240.0  broadcast 137.194.255.255
+```
+
+`ssh -b 137.194.250.227 username@ip_addr` use interface B for ssh connection
+
+
+
+## ip netns
+
+>**Q :** To use the Wi-Fi network for SSH connections to Node A and the LAN network for SSH connections to Node B, how can I achieve independent connections for each?
+
+https://www.cnblogs.com/sparkdev/p/9253409.html
+
+
+
+## Usb Camera
+
+```shell
+sudo apt update
+sudo apt install v4l-utils
+v4l2-ctl --list-devices
+
+USB Camera (usb-0000:00:14.0-3):
+    /dev/video0
+    /dev/video1
+
+Integrated Camera (usb-0000:00:14.0-5):
+    /dev/video2
+    /dev/video3
+
+v4l2-ctl --device=/dev/video0 --all
+
+lsusb
+```
+
+https://github.com/motioneye-project/motioneye
+
+
+
+## Grep Guide
+
+https://www.geeksforgeeks.org/grep-command-in-unixlinux/
+
+| Option    | Description                                                  |
+| --------- | ------------------------------------------------------------ |
+| `-c`      | This prints only a count of the lines that match a pattern   |
+| `-h`      | Display the matched lines, but do not display the filenames. |
+| `--i`     | Ignores, case for matching                                   |
+| `-l`      | Displays list of filenames only.                             |
+| `-n`      | Display the matched lines and their line numbers.            |
+| `-v`      | This prints out all the lines that do not match the pattern  |
+| `-e exp`  | Specifies expression with this option. Can use multiple times. |
+| `-f file` | Takes patterns from file, one per line.                      |
+| `-E`      | Treats pattern as an extended regular expression (ERE)       |
+| `-w`      | Match whole word                                             |
+| `-o`      | Print only the matched parts of a matching line, with each such part on a separate output line. |
+| `-A n`    | Prints searched line and `n` lines after the result.         |
+| `-B n`    | Prints searched line and `n` lines before the result.        |
+| `-C n`    | Prints searched line and `n` lines before and after the result. |
+
+
+
+## Docker No Sudo
+
+```shell
+sudo groupadd docker
+sudo gpasswd -a ${USR} docker
+sudo systemctl restart docker
+sudo chmod a+rw /var/run/docker.sock
+
+docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+
+
+### wifi
+
+**network-manager**
+
+```shell
+sudo apt install -y network-manager
+sudo systemctl enable NetworkManager
+sudo systemctl start NetworkManager
+
+nmcli dev wifi # scan
+nmcli dev wifi connect wifi_name password wifi_passwd # connect
+# nmcli dev wifi connect wifi_name --ask # interactive way
+
+ip addr show wlan0 # check
+
+# another way : nmtui (graphic interface)
+nmcli connection modify "ZEN" connection.autoconnect yes # automatic connection
+```
+
+
+
+## Service
+
+**template**
+
+```shell
+# /usr/lib/systemd/system/
+[Unit]
+Description=A new service
+After=depend on other service, e.g After=network.service
+
+[Service]
+Type=simple
+User=Harold
+WorkingDirectory=XXX
+ExecStart=XXX/a.out --option=123
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+
+
+
+
+## Encrypting a File
+
+### GPG
+
+```shell
+sudo apt-get install gnupg
+```
+
+```shell
+gpg --full-generate-key
+```
+
+- [手把手指导：在 Linux 上使用 GPG 加解密文件](https://linux.cn/article-14082-1.html)
+
+- [GPG 加密解密简明教程](https://gist.github.com/jhjguxin/6037564)
+
+- [加密软件 GPG 入门教程](https://www.yangqi.show/posts/gpg-tutorial)
+
+---
+

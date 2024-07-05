@@ -1,5 +1,5 @@
 #!/bin/bash
 
-find public -mindepth 1 ! -path 'public/.git*' -delete
+rm -rf public/
 hugo --config hugo.yaml
-npx -y pagefind --site public
+npx pagefind --site "public"
