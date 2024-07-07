@@ -393,3 +393,46 @@ gpg --full-generate-key
 
 ---
 
+
+
+## FRP
+
+https://github.com/fatedier/frp
+
+### frps
+
+```toml
+bindAddr = "0.0.0.0"
+bindPort = 7000
+kcpBindPort = 7000
+transport.maxPoolCount = 7
+
+# Configure the web server to enable the dashboard for frps.
+# dashboard is available only if webServer.port is set.
+webServer.addr = "0.0.0.0"
+webServer.port = 7001
+webServer.user = "admin"
+webServer.password = "admin"
+
+log.to = "./frps.log"
+log.level = "info"
+log.maxDays = 3
+
+auth.method = "token"
+auth.token = "12345"
+maxPortsPerClient = 0
+udpPacketSize = 1500
+
+# Only allow frpc to bind ports you list. By default, there won't be any limit.
+# allowPorts = [
+#   { single =  XXX},
+#   { start = XXX, end = YYY }
+# ]
+```
+
+
+
+### frpc
+
+
+
