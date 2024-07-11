@@ -327,7 +327,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 
 
-### wifi
+## WiFi
 
 **network-manager**
 
@@ -345,6 +345,35 @@ ip addr show wlan0 # check
 # another way : nmtui (graphic interface)
 nmcli connection modify "ZEN" connection.autoconnect yes # automatic connection
 ```
+
+
+
+## Bluetooth
+
+```shell
+sudo apt update && sudo apt install bluez
+sudo apt -y install pulseaudio-module-bluetooth
+pulseaudio --start
+
+bluetoothctl
+power on
+discoverable on
+pairable on
+bluetoothctl list
+bluetoothctl scan on
+bluetoothctl devices
+bluetoothctl pair 3C:4D:BE:84:1F:BC
+bluetoothctl connect 3C:4D:BE:84:1F:BC
+bluetoothctl disconnect 3C:4D:BE:84:1F:BC
+
+-scan on
+-remove XX:XX:XX:XX:XX:XX, if it had already been paired
+-trust XX:XX:XX:XX:XX:XX
+-pair XX:XX:XX:XX:XX:XX
+-connect XX:XX:XX:XX:XX:XX
+```
+
+
 
 
 
