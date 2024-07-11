@@ -329,6 +329,7 @@ CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 
 ## WiFi
 
+
 **network-manager**
 
 ```shell
@@ -374,9 +375,6 @@ bluetoothctl disconnect 3C:4D:BE:84:1F:BC
 ```
 
 
-
-
-
 ## Service
 
 **template**
@@ -400,8 +398,6 @@ WantedBy=multi-user.target
 
 
 
-
-
 ## Encrypting a File
 
 ### GPG
@@ -421,7 +417,6 @@ gpg --full-generate-key
 - [加密软件 GPG 入门教程](https://www.yangqi.show/posts/gpg-tutorial)
 
 ---
-
 
 
 ## FRP
@@ -459,9 +454,5 @@ udpPacketSize = 1500
 # ]
 ```
 
-
-
 ### frpc
-
-
 
