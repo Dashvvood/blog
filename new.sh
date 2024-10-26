@@ -1,5 +1,5 @@
 #!/bin/bash
-semester=S1
+semester=S2
 
 last=content/posts/$semester/last.md 
 
