@@ -471,3 +471,74 @@ udpPacketSize = 1500
 # todo
 ```
 
+
+
+### nvidia-smi
+
+**standard ouput**
+
+```shell
+$ nvidia-smi
+Sat Dec 14 18:25:41 2024
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 550.120                Driver Version: 550.120        CUDA Version: 12.4     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3050 ...    Off |   00000000:01:00.0  On |                  N/A |
+| N/A   48C    P8              5W /   60W |     644MiB /   4096MiB |      1%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A      2103      G   /usr/lib/xorg/Xorg                            290MiB |
+|    0   N/A  N/A      2248      G   /usr/bin/gnome-shell                          121MiB |
++-----------------------------------------------------------------------------------------+
+```
+
+**format output**
+
+```shell
+nvidia-smi --query-gpu=index,power.draw,power.default_limit,memory.used,memory.total --format=csv,noheader \
+| awk -F, '{printf "GPU%d: Power=%s / %s, Memory=%s/%s \n", $1, $2, $3, $4, $5}'
+```
+
+```shell
+nvidia-smi --query-gpu=index,power.draw,power.default_limit,memory.used,memory.total --format=csv,noheader \
+| awk -F, '{printf "GPU%-2s | Power: %-6s / %-6s | Memory: %-5s / %-5s\n", $1, $2, $3, $4, $5}'
+```
+
+```shell
+nvidia-smi --query-gpu=index,power.draw,power.default_limit,memory.used,memory.total --format=csv,noheader,nounits \
+| awk -F, '{printf "\033[1;32mGPU%-2s\033[0m | \033[38;2;76;114;176mPower: %-6sW / %-6sW\033[0m | \033[38;2;198;78;82mMemory: %-5sMiB / %-5sMiB\033[0m\n", $1, $2, $3, $4, $5}'
+```
+
+```shell
+GPU0  | Power:  6.66 WW /  60.00 WW | Memory:  722 MiBMiB /  4096 MiBMiB
+```
+
+>![image-20241214191550654](./index.assets/image-20241214191550654.png)
+
+**In a bash file**
+
+```shell
+#!/bin/bash
+gpu_status() {
+    nvidia-smi --query-gpu=index,power.draw,power.default_limit,memory.used,memory.total \
+    --format=csv,noheader,nounits \
+    | awk -F, '{printf "\033[1;32mGPU%-2s\033[0m | \033[38;2;76;114;176mPower: %-6sW / %-6sW\033[0m | \033[38;2;198;78;82mMemory: %-5sMiB / %-5sMiB\033[0m\n", $1, $2, $3, $4, $5}'
+}
+
+# Call once
+gpu_status
+
+# Call once every two seconds.
+watch -n 1 ./gpu_status.sh
+```
+
