@@ -551,53 +551,57 @@ gpu_status() {
 	| awk -F, '{printf "\033[1;32mGPU%-2s\033[0m | \033[38;2;76;114;176mPower: %-6sW / %-6sW\033[0m | \033[38;2;198;78;82mMemory: %-5sMiB / %-5sMiB\033[0m\n", $1, $2, $3, $4, $5}'
 }
 
-# while true; do
-#   	clear
-#  	gpu_status
-# 	if [ -z "$1" ]; then
-# 		sleep 5
-# 	else
-# 		sleep $1
-# 	fi
-# done
-
 # Define a function to show a progress bar
 show_progress() {
     local duration=$1
     local interval=1  # Update progress every second
     local progress=0
 
+    # Get terminal width, minus some padding for percentages and time
+    local term_width=$(tput cols)
+    local bar_width=$((term_width - 20))  # Reserve 20 chars for text (e.g., "100% (10/10 sec)")
+
+    # Ensure the progress bar has at least some width
+    if [ $bar_width -le 0 ]; then
+        bar_width=10
+    fi
+
     while [ $progress -le $duration ]; do
         # Calculate the percentage of progress
         local percent=$(( (progress * 100) / duration ))
+        local filled=$(( (percent * bar_width) / 100 ))
+        local empty=$((bar_width - filled))
 
-        # Print the progress bar
+        # Print the progress bar on the same line
         echo -ne "\r["
-        for i in $(seq 1 $percent); do echo -n "#"; done
-        for i in $(seq $percent 99); do echo -n " "; done
+        for i in $(seq 1 $filled); do echo -n "#"; done
+        for i in $(seq 1 $empty); do echo -n " "; done
         echo -n "] $percent% ($progress/$duration sec)"
-        
+
         sleep $interval
         ((progress+=interval))
     done
     echo # Move to the next line after progress bar is complete
 }
 
+
+# Wait time based on the argument (or default to 10 seconds)
+if [ -z "$1" ]; then
+    sleep_time=10
+else
+    sleep_time=$1
+fi
+
 # Main loop
 while true; do
     clear
     gpu_status
 
-    # Wait time based on the argument (or default to 5 seconds)
-    if [ -z "$1" ]; then
-        sleep_time=10
-    else
-        sleep_time=$1
-    fi
+    echo "Last time: $(date '+%Y-%m-%d %H:%M:%S')"
 
     # Show progress bar for the duration of the sleep
     show_progress $sleep_time
-
 done
+
 ```
 
