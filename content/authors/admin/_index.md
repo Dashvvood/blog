@@ -1,12 +1,12 @@
 ---
 # Display name
-title: 427
+title: William Wreden
 
 # Name pronunciation (optional)
 # name_pronunciation: Chien Shiung Wu
 
 # Full name (for SEO)
-first_name: Stanley
+first_name: William
 last_name: Wreden
 
 # Status emoji
@@ -17,7 +17,7 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Ultimate UnLucky Student
+role: Employee 7355608 in an office building
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -33,7 +33,7 @@ profiles:
   - icon: at-symbol
     url: 'mailto:780966523@qq.com'
     label: E-mail Me
-  - icon: github
+  - icon: brands/github
     url: 'https://github.com/Dashvvood'
     label: Show Code
   # - icon: brands/x
