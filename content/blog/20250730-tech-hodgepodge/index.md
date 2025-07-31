@@ -1,0 +1,85 @@
+---
+title:  Technical Hodgepodge
+summary: This is a mixed bag of code snippets and technical bits all thrown together.
+date: 2025-07-30
+
+# Featured image
+# Place an image named `featured.jpg/png` in this page's folder and customize its options here.
+image:
+  caption: '[**Image Source**](https://i.pinimg.com/564x/b1/10/4c/b1104ceb9984b4549cbbc5805e415f0e.jpg)'
+authors:
+  - admin
+tags:
+  - Python
+  - Linux
+---
+
+{{< toc mobile_only=true is_open=true >}}
+
+## Overview
+
+
+## Linux
+
+### ssh
+
+**interactive shell**
+```bash
+shopt -q login_shell && echo "登录式Shell" || echo "非登录式Shell"
+
+# solve this, create ~/.bash_profile and insert
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+```
+
+**SSH key-based authentication**
+```shell
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# if use ssh-copy-id
+ssh-copy-id -i ~/.ssh/id_ed25519.pub username@remote_server_ip
+# else
+mkdir -p ~/.ssh
+echo "<pub key>" >> ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
+# endif
+```
+
+
+### Parallel Zip
+**pigz**(Parallel Implementation of GZip)
+**Install**:
+```shell
+# Debian
+sudo apt install pigz
+# CentOS/RHEL
+sudo yum install pigz
+```
+**Compress into tar.gz**
+```shell
+tar -cvf - <target> | pigz -p 8 > output.tar.gz
+tar --use-compress-program="pigz -p 8" -cvf output.tar.gz <target>
+
+# pigz supports compression levels (-1 fastest to -9 highest compression):
+tar -cvf - directory/file | pigz -9 -p 8 > output.tar.gz  # high compression
+```
+
+**Decompress tar.gz**
+```shell
+pigz -d -p 8 -c input.tar.gz | tar -xvf -
+tar --use-compress-program="pigz -d -p 8" -xvf input.tar.gz
+```
+
+### Setup Env For Offline Machine
+```bash
+# Online Machine
+conda install -c conda-forge conda-pack
+conda pack -n my_env -o my_env.tar.gz
+
+# Offline
+mkdir -p /opt/miniconda3/envs/my_env 
+tar -xzf my_env.tar.gz -C /opt/miniconda3/envs/my_env
+conda activate my_env
+```
+

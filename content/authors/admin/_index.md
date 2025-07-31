@@ -17,7 +17,7 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Employee 7355608 in an office building
+role: Employee 427 in an office building
 
 # Organizations/Affiliations to show in About widget
 organizations:
@@ -25,7 +25,7 @@ organizations:
     url: https://danganronpa.fandom.com/wiki/Hope%27s_Peak_Academy
 
 # Short bio (displayed in user profile at end of posts)
-bio: To be finished
+bio: The is the story of a man named Stanley...
 
 # Social Networking
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
@@ -54,7 +54,7 @@ profiles:
 highlight_name: true
 
 # Author's website URL
-website: "849823749234324"
+website: ""
 ---
 
 <!-- Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include
