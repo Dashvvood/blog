@@ -71,11 +71,12 @@ pigz -d -p 8 -c input.tar.gz | tar -xvf -
 tar --use-compress-program="pigz -d -p 8" -xvf input.tar.gz
 ```
 
-### Setup Env For Offline Machine
+### Offline Machine
 ```bash
 # Online Machine
 conda install -c conda-forge conda-pack
 conda pack -n my_env -o my_env.tar.gz
+conda pack -n my_env -o numpy.tar.gz --filter=numpy 
 
 # Offline
 mkdir -p /opt/miniconda3/envs/my_env 
