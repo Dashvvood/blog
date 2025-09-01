@@ -4,12 +4,10 @@ title: Technical Hodgepodge
 date: 2025-08-31 12:00 +0800
 ---
 
-## Overview
 
 ## Linux
 
 ### ssh
-
 **interactive shell**
 ```bash
 shopt -q login_shell && echo "登录式Shell" || echo "非登录式Shell"
@@ -58,6 +56,7 @@ pigz -d -p 8 -c input.tar.gz | tar -xvf -
 tar --use-compress-program="pigz -d -p 8" -xvf input.tar.gz
 ```
 
+
 ### Offline Machine
 ```bash
 # Online Machine
@@ -84,4 +83,22 @@ conda install -n offline_env numpy pandas --download-only -d ./offline_packages
 conda create -n my_env --offline  
 # Install packages from local .tar.bz2 files
 conda install -n my_env --offline --use-local ./offline_packages/*.tar.bz2
+```
+
+
+### Document to file
+[**Here Document**](https://en.wikipedia.org/wiki/Here_document)
+
+无内置格式化功能，完全保留文本原貌
+```shell
+cat > config.yml <<EOF
+server:
+  port: 8080
+  host: $HOSTNAME
+EOF
+```
+
+**echo**
+```shell
+echo -e "Line 1\nLine 2\tTabbed" > file.txt # \n换行，\t制表符
 ```
