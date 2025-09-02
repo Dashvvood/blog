@@ -4,7 +4,6 @@ title: Technical Hodgepodge
 date: 2025-08-31 12:00 +0800
 ---
 
-
 ## Linux
 
 ### ssh
@@ -101,4 +100,19 @@ EOF
 **echo**
 ```shell
 echo -e "Line 1\nLine 2\tTabbed" > file.txt # \n换行，\t制表符
+```
+
+
+### Pipe Viewer (pv)
+```shell
+# 获取进度
+tar -cf - $dir | pv -s $(du -sb $dir | awk '{print $1}') > $dir.tar
+tar -cf - $dir | pv -s $(du -sb $dir | awk '{print $1}') | pigz -p 8 > $dir.tar.gz
+# -: 代表stdout; pv -s根据文件大小评估进度
+```
+
+### tail
+```shell
+tail -n +K：表示​​从文件的第 K 行开始输出，一直输出到文件末尾​​。
+tail -n K（或 tail -K）：表示​​输出文件的最后 K 行​​。
 ```
