@@ -116,3 +116,30 @@ tar -cf - $dir | pv -s $(du -sb $dir | awk '{print $1}') | pigz -p 8 > $dir.tar.
 tail -n +K：表示​​从文件的第 K 行开始输出，一直输出到文件末尾​​。
 tail -n K（或 tail -K）：表示​​输出文件的最后 K 行​​。
 ```
+
+
+### parallel
+
+> 这个程序太NB了, 怎么啥功能都有
+
+```shell
+-a file​​	parallel -a files.txt wc -l	参数列表已存在于文件中时最方便
+​​:::: file​​	parallel wc -l :::: files.txt	功能同 -a，另一种语法，可读性更好
+​​:::​​	parallel wc -l ::: file1.txt file2.txt	参数数量较少，直接写在命令行时
+
+# 甚至可以试运行
+parallel --dry-run -a tmp.txt -j 4 'cos cp "cos://asr-dig-data-1256237915/{}" "$(basename {})"'
+```
+
+### print0的用法
+```shell
+find downloads/ -name "*.mp3" -print0 | head -z -n 100 | tar --use-compress-program="pigz -p 8" -cf first_100_mp3.tar.gz --null -T -
+# head -z
+# tar --null
+```
+
+
+### 多重引号怎么加?
+```shell
+watch -n 5 'ls -lh *.tar | awk '\''{print $5, $9}'\'''
+```
