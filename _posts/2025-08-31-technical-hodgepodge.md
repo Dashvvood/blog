@@ -139,16 +139,13 @@ find downloads/ -name "*.mp3" -print0 | head -z -n 100 | tar --use-compress-prog
 ```
 
 
-### 多重引号怎么加?
-```shell
-watch -n 5 'ls -lh *.tar | awk '\''{print $5, $9}'\'''
-```
+
 
 ### Shell 扩展名获取
 ```shell
-filename="${fullfile##*/}"   # 先从路径中提取出带扩展名的文件名 (例如 "archive.tar.gz")
-name="${filename%.*}"        # 移除从最后一个 '.' 开始的后缀，得到文件名 (例如 "archive.tar")
-extension="${filename##*.}"  # 移除直到最后一个 '.' 的前缀，得到扩展名 (例如 "gz")
+filename="${fullfile##*/}"   # 先从路径中提取出带扩展名的文件名
+name="${filename%.*}"        # 移除从最后一个 '.' 开始的后缀，得到文件名
+extension="${filename##*.}"  # 移除直到最后一个 '.' 的前缀，得到扩展名
 ```
 
 ### 变量存储时间点
@@ -165,4 +162,13 @@ date_only=$(date -d "@$current_timestamp" +%Y%m%d)
 # 输出结果
 echo "完整日期时间: $datetime_full"
 echo "仅日期: $date_only"
+```
+
+### awk 实用样例
+```shell
+# 多重引号:
+watch -n 5 'ls -lh *.tar | awk '\''{print $5, $9}'\'''
+
+# 对比找新的前10个
+awk 'BEGIN { IGNORECASE=1 } NR==FNR { archive[$0]; next } !($0 in archive) && !seen[$0]++ { print; if (++count >= '${batch}') exit }' ${archive_file} ${input_file} > ${tmpfile}
 ```
