@@ -172,3 +172,54 @@ watch -n 5 'ls -lh *.tar | awk '\''{print $5, $9}'\'''
 # 对比找新的前10个
 awk 'BEGIN { IGNORECASE=1 } NR==FNR { archive[$0]; next } !($0 in archive) && !seen[$0]++ { print; if (++count >= '${batch}') exit }' ${archive_file} ${input_file} > ${tmpfile}
 ```
+
+### Shell 遍历方法归纳
+```shell
+#!/bin/bash
+servers=("Server1" "Server2" "Server3" "Server4")
+# 遍历 servers 数组的每一个元素
+for server in "${servers[@]}"; do
+    echo "当前服务器: $server"
+done
+```
+**Shell 数组遍历方式对比表**
+
+# Shell 数组遍历方式对比表
+| 语法格式 | 行为描述 | 遍历结果 | 适用场景 | 示例输出 |
+|----------|----------|----------|----------|----------|
+| **`"${数组名[@]}"`**<br>(推荐做法) | 每个元素被视为独立的字符串 | **循环次数 = 数组元素个数**<br>每个元素保持完整 | **遍历数组**，处理含空格的元素 | `AutoDL`<br>`AutoDL2`<br>`AutoDL3`<br>`AutoDL4` |
+| **`"${数组名[*]}"`** | 所有元素合并为一个字符串 | **循环次数 = 1**<br>整个数组被当作一个元素 | 将数组所有元素合并为一个字符串输出 | `AutoDL AutoDL2 AutoDL3 AutoDL4` (一次输出) |
+| **`${数组名[@]}`**<br>(无引号，危险！) | 每个元素独立，但**元素内的空格会触发分词** | 循环次数 **>=** 数组元素个数<br>元素会被空格拆散 | 需要根据空格明确拆分元素时 | 若元素含空格，则会被拆分成多个部分 |
+
+**example**
+```shell
+# 测试数组（包含空格元素）
+files=("Project A" "Project B" "Project C")
+
+# 1. 正确做法："${files[@]}"
+for file in "${files[@]}"; do
+    echo "文件: $file"
+done
+# 输出：3次循环，元素保持完整
+# 文件: Project A
+# 文件: Project B
+# 文件: Project C
+
+# 2. 错误示例："${files[*]}"
+for file in "${files[*]}"; do
+    echo "文件: $file"
+done
+# 输出：1次循环，所有元素合并
+# 文件: Project A Project B Project C
+
+# 3. 危险做法：${files[@]} (无引号)
+for file in ${files[@]}; do
+    echo "文件: $file"
+done
+# 输出：4次循环，元素被空格拆分
+# 文件: Project
+# 文件: A
+# 文件: Project
+# 文件: B
+# 文件: Project C
+```
