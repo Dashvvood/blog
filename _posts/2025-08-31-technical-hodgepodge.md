@@ -175,7 +175,7 @@ awk 'BEGIN { IGNORECASE=1 } NR==FNR { archive[$0]; next } !($0 in archive) && !s
 
 ### Shell 遍历方法归纳
 ```shell
-#!/bin/bash
+#!/bin/bashsou
 servers=("Server1" "Server2" "Server3" "Server4")
 # 遍历 servers 数组的每一个元素
 for server in "${servers[@]}"; do
@@ -184,12 +184,12 @@ done
 ```
 **Shell 数组遍历方式对比表**
 
-# Shell 数组遍历方式对比表
-| 语法格式 | 行为描述 | 遍历结果 | 适用场景 | 示例输出 |
-|----------|----------|----------|----------|----------|
-| **`"${数组名[@]}"`**<br>(推荐做法) | 每个元素被视为独立的字符串 | **循环次数 = 数组元素个数**<br>每个元素保持完整 | **遍历数组**，处理含空格的元素 | `AutoDL`<br>`AutoDL2`<br>`AutoDL3`<br>`AutoDL4` |
-| **`"${数组名[*]}"`** | 所有元素合并为一个字符串 | **循环次数 = 1**<br>整个数组被当作一个元素 | 将数组所有元素合并为一个字符串输出 | `AutoDL AutoDL2 AutoDL3 AutoDL4` (一次输出) |
-| **`${数组名[@]}`**<br>(无引号，危险！) | 每个元素独立，但**元素内的空格会触发分词** | 循环次数 **>=** 数组元素个数<br>元素会被空格拆散 | 需要根据空格明确拆分元素时 | 若元素含空格，则会被拆分成多个部分 |
+### Shell 数组遍历方式对比表
+
+| Header 1 | Header 2 | Header 3 |
+|----------|:--------:|---------:|
+| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
+| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
 
 **example**
 ```shell
@@ -223,3 +223,5 @@ done
 # 文件: B
 # 文件: Project C
 ```
+
+### 
