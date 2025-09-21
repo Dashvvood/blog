@@ -186,11 +186,6 @@ done
 
 ### Shell 数组遍历方式对比表
 
-| Header 1 | Header 2 | Header 3 |
-|----------|:--------:|---------:|
-| Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3 |
-| Row 2 Col 1 | Row 2 Col 2 | Row 2 Col 3 |
-
 **example**
 ```shell
 # 测试数组（包含空格元素）
@@ -223,5 +218,3 @@ done
 # 文件: B
 # 文件: Project C
 ```
-
-### 
